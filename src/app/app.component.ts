@@ -111,8 +111,8 @@ export class AppComponent implements OnInit {
   }
 
   showOnlyDifferent(e) {
-    if(e.target.checked){
-      this.checkDifferences = true;        
+    if (e.target.checked) {
+      this.checkDifferences = true;
     } else {
       this.checkDifferences = false;
     }

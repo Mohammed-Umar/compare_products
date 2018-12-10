@@ -28,6 +28,12 @@ export class ProductsService {
 
   public productsList: Array<any> = [];
 
+  public checkDifferences = false;
+
+  public is1stProductActive = false;
+
+  public is2ndProductActive = false;
+
   private itemsList: BehaviorSubject<any> = new BehaviorSubject([]);
 
   public getAllProducts = this.itemsList.asObservable();
@@ -54,7 +60,21 @@ export class ProductsService {
     });
   }
 
-  private _buildProducts(key) {
+  public getProductFeatures() {
+
+  }
+
+  private _getProductsList() {
+    const keys = Object.keys(this._responce.products.compareSummary.titles);
+    this.IDsList.next(keys);
+    keys.map(elm => {
+      console.log(elm);
+      this._buildProductStructure(elm);
+    });
+    return this.productsList;
+  }
+
+  private _buildProductStructure(key) {
     this.id = key;
     this.title = this._responce.products.compareSummary.titles[key].title;
     this.subtitle = this._responce.products.compareSummary.titles[key].subtitle;
@@ -64,16 +84,6 @@ export class ProductsService {
     this.image = this._responce.products.compareSummary.images[key];
     this.featuresList = this._getFeaturesList(this._responce, key);
     this._buildProductJson();
-  }
-
-  private _getProductsList() {
-    const keys = Object.keys(this._responce.products.compareSummary.titles);
-    this.IDsList.next(keys);
-    keys.map(elm => {
-      console.log(elm);
-      this._buildProducts(elm);
-    });
-    return this.productsList;
   }
 
   private _getFeaturesList(data, key) {

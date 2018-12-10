@@ -1,3 +1,18 @@
-<p>
-  features works!
-</p>
+<div>
+  <div class="column">
+    <label class="pad" style="font-size:18px; text-align: center">Compare</label>
+    <p class="mt-5 pad" style="font-size:14px">{{ message }}</p>
+    <input class="mx-3 align-center" type="checkbox" (change)="showOnlyDifferent($event)"> 
+    <span class="mx-3 align-center" style="position:relative;left:10px;font-size:14px !important;font-weight:bold;margin-left:10px" >Show only differences</span>
+  </div>
+  <table class="table" *ngIf="!service.checkDifferences">
+    <tbody *ngFor="let featureSet of product?.featuresList">
+    <tr class="header">
+       <th>{{featureSet?.product1?.title}}</th>
+    </tr>
+    <tr *ngFor="let feature of featureSet?.product1?.features">
+       <td>{{feature?.product1?.featureName}}</td>
+    </tr>
+    </tbody>
+ </table>
+</div>

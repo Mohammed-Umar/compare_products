@@ -1,13 +1,13 @@
 <div>
   <div class="column img_wrp"  *ngIf="is1stProductActive" >
-    <img class="img-responsive center-block img-rounded image" src={{activeProduct1?.image}} alt="Forest">
+    <img class="img-responsive center-block img-rounded image" src={{product?.image}} alt="Forest">
     <p id=x (click)="removeItem(1)">x</p>
     <!-- <img class="topRight" src="../assets/close.jpeg" (click)="removeItem(1)"> -->
     <br>
-    <span  class="text-left">{{activeProduct1?.title}}</span><br>
-    <p><span style="font-weight:bold;font-size:12px !important">₹{{activeProduct1?.finalPrice}}</span> 
-       <span style="color:grey;font-size:10px !important; margin-left: 5px">₹{{activeProduct1?.price}}</span>
-       <span style="font-weight:bold;color:green; margin-left: 5px">{{activeProduct1?.totalDiscount}}% off</span></p>
+    <span  class="text-left">{{product?.title}}</span><br>
+    <p><span style="font-weight:bold;font-size:12px !important">₹{{product?.finalPrice}}</span> 
+       <span style="color:grey;font-size:10px !important; margin-left: 5px">₹{{product?.price}}</span>
+       <span style="font-weight:bold;color:green; margin-left: 5px">{{product?.totalDiscount}}% off</span></p>
  </div>
  <div class="column select"  *ngIf="!is1stProductActive">
     <select (change)="selectedProduct($event.target.value, 1)">
@@ -16,15 +16,11 @@
      </select>
   </div>
   <table class="table" *ngIf="!checkDifferences">
-      <tbody *ngFor="let featureSet of activeProduct1?.featuresList | merge:activeProduct2?.featuresList">
+      <tbody *ngFor="let featureSet of product?.featuresList">
       <tr class="header">
-         <th>{{featureSet?.product1?.title}}</th>
-         <th class="hdr"></th>
          <th class="hdr"></th>
       </tr>
-      <tr *ngFor="let feature of featureSet?.product1?.features | merge:featureSet?.product2?.features">
-         <td>{{feature?.product1?.featureName}}</td>
-         <td>{{feature?.product1?.value}}</td>
+      <tr *ngFor="let feature of featureSet?.product1?.features">
          <td>{{feature?.product2?.value}}</td>
       </tr>
       </tbody>
