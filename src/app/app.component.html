@@ -1,23 +1,72 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-</div>
-<h2>Here are some links to help you start: </h2>
 <div>
-  {{ body }}
+   <div class="row">
+      <div class="column">
+         <label class="pad" style="font-size:18px; text-align: center">Compare</label>
+         <p class="mt-5 pad" style="font-size:14px">{{ message }}</p>
+         <input class="mx-3 align-center" type="checkbox" (change)="showOnlyDifferent($event)" style="float: bottom"> 
+         <span class="mx-3 align-center" style="position:relative;left:10px;font-size:14px !important;font-weight:bold;margin-left:10px" >Show only differences</span>
+      </div>
+      <div class="column img_wrp"  *ngIf="is1stProductActive" >
+         <img class="img-responsive center-block img-rounded image" src={{activeProduct1?.image}} alt="Forest">
+         <p id=x (click)="removeItem(1)">x</p>
+         <!-- <img class="topRight" src="../assets/close.jpeg" (click)="removeItem(1)"> -->
+         <br>
+         <span  class="text-left">{{activeProduct1?.title}}</span><br>
+         <p><span style="font-weight:bold;font-size:12px !important">₹{{activeProduct1?.finalPrice}}</span> 
+            <span style="color:grey;font-size:10px !important; margin-left: 5px">₹{{activeProduct1?.price}}</span>
+            <span style="font-weight:bold;color:green; margin-left: 5px">{{activeProduct1?.totalDiscount}}% off</span></p>
+      </div>
+      <div class="column select"  *ngIf="!is1stProductActive">
+       <select (change)="selectedProduct($event.target.value, 1)">
+          <option value="" disabled selected>Add Product</option>
+          <option *ngFor="let Id of productIds" [disabled]="isAlreadySelected(Id)" [value]="Id" >{{Id}}</option>
+        </select>
+      </div> <!-- This div is being writen twice BAD CODE-->
+      <div class="column img_wrp" style="float:right" *ngIf="is2ndProductActive" >
+         <img class="img-responsive center-block img-rounded image" src={{activeProduct2?.image}} alt="Forest">
+         <p id=x (click)="removeItem(2)">x</p>
+         <!-- <img class="topRight" src="../assets/close.jpeg" (click)="removeItem(2)"> -->
+         <br>
+         <span  class="text-left">{{activeProduct2?.title}}</span><br>
+         <p><span style="font-weight:bold;font-size:12px !important">₹{{activeProduct2?.finalPrice}}</span> 
+            <span style="color:grey;font-size:10px !important; margin-left: 5px">₹{{activeProduct2?.price}}</span>
+            <span style="font-weight:bold;color:green; margin-left: 5px">{{activeProduct2?.totalDiscount}}% off</span></p>
+      </div>
+      <div class="column select" *ngIf="!is2ndProductActive">
+       <select id="category"  (change)="selectedProduct($event.target.value, 2)">
+          <option value="" disabled selected>Add Product</option>
+          <option *ngFor="let Id of productIds" [disabled]="isAlreadySelected(Id)" [value]="Id" >{{Id}}</option>
+        </select>
+       </div>
+    </div>
+    <table class="table" *ngIf="!checkDifferences">
+      <tbody *ngFor="let featureSet of activeProduct1?.featuresList | merge:activeProduct2?.featuresList">
+      <tr class="header">
+         <th>{{featureSet?.product1?.title}}</th>
+         <th class="hdr"></th>
+         <th class="hdr"></th>
+      </tr>
+      <tr *ngFor="let feature of featureSet?.product1?.features | merge:featureSet?.product2?.features">
+         <td>{{feature?.product1?.featureName}}</td>
+         <td>{{feature?.product1?.value}}</td>
+         <td>{{feature?.product2?.value}}</td>
+      </tr>
+      </tbody>
+   </table>
+   <table class="table" *ngIf="checkDifferences">
+         <tbody *ngFor="let featureSet of activeProduct1?.featuresList | merge:activeProduct2?.featuresList">
+         <tr class="header">
+            <th>{{featureSet?.product1?.title}}</th>
+            <th class="hdr"></th>
+            <th class="hdr"></th>
+         </tr>
+         <tr *ngFor="let feature of featureSet?.product1?.features | merge:featureSet?.product2?.features">
+            <ng-container *ngIf="feature?.product1?.value !== feature?.product2?.value">
+               <td>{{feature?.product1?.featureName}}</td>
+               <td>{{feature?.product1?.value}}</td>
+               <td>{{feature?.product2?.value}}</td>
+            </ng-container>
+         </tr>
+         </tbody>
+      </table>
 </div>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/cli">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
-
