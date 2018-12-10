@@ -5,11 +5,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { ProductsService } from './products.service';
 import { MergePipe } from './merge.pipe';
+import { ProductComponent } from './product/product.component';
+import { FeaturesComponent } from './features/features.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    MergePipe
+    MergePipe,
+    ProductComponent,
+    FeaturesComponent
   ],
   imports: [
     BrowserModule,
