@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ProductsService } from '../products.service';
 
 
@@ -9,7 +9,7 @@ import { ProductsService } from '../products.service';
 })
 export class FeaturesComponent implements OnInit {
 
-  product: any;
+  @Input() product: any;
 
   message: string;
 
@@ -17,17 +17,16 @@ export class FeaturesComponent implements OnInit {
 
   is2ndProductActive = this.service.is2ndProductActive;
 
-  constructor(private service: ProductsService) { }
+  constructor(private service: ProductsService) {}
 
   ngOnInit() {
-    this.product = this.service.getProductFeatures();
   }
 
   updateMessage() {
     if (this.is1stProductActive && this.is2ndProductActive) {
       this.message = 'Two items Selected';
     } else if (
-      (this.is1stProductActive === true && this.is2ndProductActive === false) || 
+      (this.is1stProductActive === true && this.is2ndProductActive === false) ||
       (this.is2ndProductActive === true && this.is1stProductActive === false)
       ) {
         this.message = 'Add another product to compare';

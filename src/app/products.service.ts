@@ -28,6 +28,8 @@ export class ProductsService {
 
   public productsList: Array<any> = [];
 
+  public currentActiveProductID: any;
+
   public checkDifferences = false;
 
   public is1stProductActive = false;
@@ -43,6 +45,10 @@ export class ProductsService {
   public productIDs = this.IDsList.asObservable();
 
   readonly url: string = 'http://demo9176653.mockable.io/products';
+
+  // New
+  public currentSelected = [];
+  //
 
   public getProducts() {
     this._callGetAPI().subscribe(res => {
@@ -60,9 +66,35 @@ export class ProductsService {
     });
   }
 
-  public getProductFeatures() {
-
+  productSelection(id) {
+    const selected = [];
+    selected.push(id);
   }
+
+  addActiveID(id) {
+    this.currentSelected.push(id);
+  }
+
+  updateActiveID(id) {
+    const index = this.currentSelected.indexOf(id);
+    this.currentSelected.slice(index, 1);
+  }
+
+  public isAlreadySelected(key) {
+    this.currentSelected.map(id => {
+      if (key === id) {
+        return true;
+      }
+    });
+    return false;
+    // if (this.currentActiveProductID === key) {
+    //   return true;
+    // }
+  }
+
+  // public getProductFeatures() {
+  //   this._buildProductStructure(null);
+  // }
 
   private _getProductsList() {
     const keys = Object.keys(this._responce.products.compareSummary.titles);
@@ -75,7 +107,7 @@ export class ProductsService {
   }
 
   private _buildProductStructure(key) {
-    this.id = key;
+    this.id = key === null || key === '' ? '' : key;
     this.title = this._responce.products.compareSummary.titles[key].title;
     this.subtitle = this._responce.products.compareSummary.titles[key].subtitle;
     this.price = this._responce.products.compareSummary.productPricingSummary[key].price;

@@ -1,4 +1,4 @@
-<div>
+<!-- <div>
    <div class="row">
       <div class="column">
          <label class="pad" style="font-size:18px; text-align: center">Compare</label>
@@ -8,9 +8,9 @@
       </div>
       <div class="column img_wrp"  *ngIf="is1stProductActive" >
          <img class="img-responsive center-block img-rounded image" src={{activeProduct1?.image}} alt="Forest">
-         <p id=x (click)="removeItem(1)">x</p>
+         <p id=x (click)="removeItem(1)">x</p> -->
          <!-- <img class="topRight" src="../assets/close.jpeg" (click)="removeItem(1)"> -->
-         <br>
+         <!-- <br>
          <span  class="text-left">{{activeProduct1?.title}}</span><br>
          <p><span style="font-weight:bold;font-size:12px !important">₹{{activeProduct1?.finalPrice}}</span> 
             <span style="color:grey;font-size:10px !important; margin-left: 5px">₹{{activeProduct1?.price}}</span>
@@ -21,12 +21,12 @@
           <option value="" disabled selected>Add Product</option>
           <option *ngFor="let Id of productIds" [disabled]="isAlreadySelected(Id)" [value]="Id" >{{Id}}</option>
         </select>
-      </div> <!-- This div is being writen twice BAD CODE-->
-      <div class="column img_wrp" style="float:right" *ngIf="is2ndProductActive" >
+      </div> This div is being writen twice BAD CODE -->
+      <!-- <div class="column img_wrp" style="float:right" *ngIf="is2ndProductActive" >
          <img class="img-responsive center-block img-rounded image" src={{activeProduct2?.image}} alt="Forest">
-         <p id=x (click)="removeItem(2)">x</p>
+         <p id=x (click)="removeItem(2)">x</p> -->
          <!-- <img class="topRight" src="../assets/close.jpeg" (click)="removeItem(2)"> -->
-         <br>
+         <!-- <br>
          <span  class="text-left">{{activeProduct2?.title}}</span><br>
          <p><span style="font-weight:bold;font-size:12px !important">₹{{activeProduct2?.finalPrice}}</span> 
             <span style="color:grey;font-size:10px !important; margin-left: 5px">₹{{activeProduct2?.price}}</span>
@@ -69,4 +69,12 @@
          </tr>
          </tbody>
       </table>
+</div> -->
+
+<div>
+      <div class="row">
+         <app-features class="column" [product]="productStructure"></app-features>
+         <app-product *ngFor="let product of products" class="column" [product]="product" [productIds]="IdsList" (selectedProductID)="x($event)" (checkIdIfSelected)="isItSelected($event)" (removeProduct)="del($event)"></app-product>
+         <!-- <app-product class="column" [product]="product2" [productIds]="IdsList" (selectedProductID)="x($event)" (checkIdIfSelected)="isItSelected($event)"></app-product> -->
+      </div>
 </div>

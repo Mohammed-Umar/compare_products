@@ -1,28 +1,40 @@
 <div>
-  <div class="column img_wrp"  *ngIf="is1stProductActive" >
-    <img class="img-responsive center-block img-rounded image" src={{product?.image}} alt="Forest">
-    <p id=x (click)="removeItem(1)">x</p>
-    <!-- <img class="topRight" src="../assets/close.jpeg" (click)="removeItem(1)"> -->
-    <br>
-    <span  class="text-left">{{product?.title}}</span><br>
-    <p><span style="font-weight:bold;font-size:12px !important">₹{{product?.finalPrice}}</span> 
-       <span style="color:grey;font-size:10px !important; margin-left: 5px">₹{{product?.price}}</span>
-       <span style="font-weight:bold;color:green; margin-left: 5px">{{product?.totalDiscount}}% off</span></p>
- </div>
- <div class="column select"  *ngIf="!is1stProductActive">
-    <select (change)="selectedProduct($event.target.value, 1)">
-       <option value="" disabled selected>Add Product</option>
-       <option *ngFor="let Id of productIds" [disabled]="isAlreadySelected(Id)" [value]="Id" >{{Id}}</option>
-     </select>
-  </div>
-  <table class="table" *ngIf="!checkDifferences">
+   <div class="select" style="height:300px;padding:100px 50px" *ngIf="!isProductActive"> <!-- column -->
+      <select (change)="productSelection($event.target.value)">
+         <option value="" disabled selected>Add Product</option>
+         <option *ngFor="let Id of productIds" [disabled]="isAlreadySelected(Id)" [value]="Id" >{{Id}}</option>
+      </select>
+   </div>
+   <!-- <div></div> -->
+   <div class="img_wrp" style="height:300px;padding:20px" *ngIf="isProductActive"> <!-- class="column img_wrp" -->
+      <img class="img-responsive center-block img-rounded image" src={{product?.image}} alt="Forest">
+      <p id=x (click)="removeItem(product.id)">x</p>
+      <br>
+      <span  class="text-left">{{product?.title}}</span><br>
+      <p><span style="font-weight:bold;font-size:12px !important">₹{{product?.finalPrice}}</span> 
+         <span style="color:grey;font-size:10px !important; margin-left: 5px">₹{{product?.price}}</span>
+         <span style="font-weight:bold;color:green; margin-left: 5px">{{product?.totalDiscount}}% off</span></p>
+   </div>
+   <table class="table" *ngIf="!service.checkDifferences">
       <tbody *ngFor="let featureSet of product?.featuresList">
-      <tr class="header">
-         <th class="hdr"></th>
-      </tr>
-      <tr *ngFor="let feature of featureSet?.product1?.features">
-         <td>{{feature?.product2?.value}}</td>
-      </tr>
+         <tr class="header">
+            <th class="hdr"></th>
+         </tr>
+         <tr *ngFor="let feature of featureSet?.features">
+            <td>{{feature?.value}}</td>
+         </tr>
       </tbody>
    </table>
+   <!-- <table class="table" *ngIf="checkDifferences">
+      <tbody *ngFor="let featureSet of product?.featuresList">
+         <tr class="header">
+            <th class="hdr"></th>
+         </tr>
+         <tr *ngFor="let feature of featureSet?.product1?.features">
+            <ng-container *ngIf="feature?.product1?.value !== feature?.product2?.value">
+               <td>{{feature?.product2?.value}}</td>
+            </ng-container>
+         </tr>
+      </tbody>
+   </table> -->
 </div>

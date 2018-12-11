@@ -26,7 +26,7 @@ tr td {
 .column {
 	float: left;
 	width: 33%;
-	padding: 10px;
+	/* padding: 10px; */
 }
 
 .row:after {
